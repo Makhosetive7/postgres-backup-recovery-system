@@ -2,6 +2,9 @@
 
 Automated logical backups, restore testing, and disaster recovery documentation for PostgreSQL. Built as a hands-on portfolio project covering backup strategy, validation, retention, and CI automation.
 
+**Documentation:** [DR runbook and policies](https://makhosetive7.github.io/postgres-backup-recovery-system/)  
+**Repository:** [github.com/Makhosetive7/postgres-backup-recovery-system](https://github.com/Makhosetive7/postgres-backup-recovery-system)
+
 ## Overview
 
 This repository implements a complete backup workflow:
@@ -149,7 +152,7 @@ Fails if the latest backup is older than 25 hours or smaller than 100 KB.
 |----------|------|
 | DR runbook | [docs/dr_runbook.md](docs/dr_runbook.md) |
 | RTO / RPO | [docs/rto_rpo_policy.md](docs/rto_rpo_policy.md) |
-| GitHub Pages | Enable in repo Settings (branch `main`, folder `/docs`) — [docs/index.md](docs/index.md) |
+| GitHub Pages | [makhosetive7.github.io/postgres-backup-recovery-system](https://makhosetive7.github.io/postgres-backup-recovery-system/) |
 | Implementation guides | [guides/](guides/) |
 
 ## License
