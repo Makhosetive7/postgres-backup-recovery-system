@@ -1,0 +1,54 @@
+name: Weekly Validation
+
+on:
+  schedule:
+    # Sunday 02:00 UTC
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      EXPECTED_CUSTOMERS: "10000"
+      EXPECTED_PRODUCTS: "1000"
+      EXPECTED_ORDERS: "50000"
+      EXPECTED_ORDER_ITEMS: "100000"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Run backup
+        run: |
+          chmod +x scripts/backup_full.sh scripts/validate_backup.sh
+          ./scripts/backup_full.sh
+
+      - name: Validate backup file
+        run: ./scripts/validate_backup.sh --latest
+
+      - name: Verify live database row counts
+        run: |
+          ADMIN_URL="${DATABASE_URL//-pooler/}"
+          check() {
+            local table="$1" expected="$2" actual
+            actual="$(psql "${ADMIN_URL}" -v ON_ERROR_STOP=1 -t -A -c "SELECT COUNT(*) FROM ${table}")"
+            if [ "${actual}" != "${expected}" ]; then
+              echo "FAIL ${table}: got ${actual} expected ${expected}"
+              exit 1
+            fi
+            echo "OK ${table}: ${actual}"
+          }
+          check customers "${EXPECTED_CUSTOMERS}"
+          check products "${EXPECTED_PRODUCTS}"
+          check orders "${EXPECTED_ORDERS}"
+          check order_items "${EXPECTED_ORDER_ITEMS}"
+
+      - name: Upload validated backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-backup-${{ github.run_id }}
+          path: backups/backup_*.dump
+          retention-days: 7

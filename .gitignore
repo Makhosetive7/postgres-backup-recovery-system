@@ -1,0 +1,36 @@
+# Environment variables
+.env
+.env.local
+*.env
+
+# Backup files (never commit!)
+backups/
+*.dump
+*.sql.gz
+*.backup
+wal_archive/
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+env/
+
+# Logs
+*.log
+test_results/*.log
+
+# Local study materials
+local_reading_materials/
+
+# Temporary
+tmp/
+temp/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Personal notes
+NOTES.md

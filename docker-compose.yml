@@ -1,0 +1,26 @@
+# Optional: local PostgreSQL (project uses Neon by default)
+# Local PostgreSQL for backup/recovery practice
+# Start:  docker compose up -d
+# Stop:   docker compose down
+# Reset:  docker compose down -v   (deletes all data!)
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: pg-backup-lab
+    environment:
+      POSTGRES_USER: shop_user
+      POSTGRES_PASSWORD: shop_pass
+      POSTGRES_DB: shop_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shop_user -d shop_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

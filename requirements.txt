@@ -1,0 +1,15 @@
+# PostgreSQL Backup & Recovery System
+# Python Dependencies
+
+# Database connection (modern psycopg3)
+psycopg[binary]==3.3.4
+
+# Fake data generation for sample database
+faker==20.1.0
+
+# Environment variable management
+python-dotenv==1.0.0
+
+# Email notifications (optional)
+# Uncomment if you want email alerts
+# secure-smtplib==0.1.1
