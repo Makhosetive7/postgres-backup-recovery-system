@@ -70,7 +70,7 @@ postgres-backup-recovery-system/
 ### Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/postgres-backup-recovery-system.git
+git clone https://github.com/Makhosetive7/postgres-backup-recovery-system.git
 cd postgres-backup-recovery-system
 
 python3 -m venv venv
