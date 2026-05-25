@@ -1,6 +1,8 @@
-# Recovery Quick Steps (Phase 1)
+# Recovery Quick Steps
 
 Lab database on Neon. **Do not run on production without change control.**
+
+Full procedures: [dr_runbook.md](dr_runbook.md)
 
 ## Scenario: Full database loss (restore from latest dump)
 

@@ -143,6 +143,15 @@ Target RPO/RTO depend on backup frequency and restore testing; document your mea
 
 Fails if the latest backup is older than 25 hours or smaller than 100 KB.
 
+## Documentation
+
+| Resource | Link |
+|----------|------|
+| DR runbook | [docs/dr_runbook.md](docs/dr_runbook.md) |
+| RTO / RPO | [docs/rto_rpo_policy.md](docs/rto_rpo_policy.md) |
+| GitHub Pages | Enable in repo Settings (branch `main`, folder `/docs`) — [docs/index.md](docs/index.md) |
+| Implementation guides | [guides/](guides/) |
+
 ## License
 
 MIT
