@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 """
-Day 2: Create e-commerce schema + sample data on Neon.
-
-Run from project root:
-    ./venv/bin/python scripts/create_sample_db.py
-
-Re-running drops and recreates tables (safe for our lab DB).
+Creating an e-commerce schema and sample data on Neon.
 """
 
 import os
@@ -21,7 +16,7 @@ COUNTS = {
     "customers": 10_000,
     "products": 1_000,
     "orders": 50_000,
-    "order_items": 100_000,  # 2 line items per order on average
+    "order_items": 100_000,
 }
 
 # --- Schema: parent tables before children (foreign keys) --------------------
@@ -67,7 +62,6 @@ CREATE TABLE order_items (
 
 
 def seed_customers(cur, fake: Faker, count: int) -> None:
-    """Insert customers via COPY (fast). SERIAL assigns customer_id 1..count."""
     print(f"  Seeding {count:,} customers...")
     rows = [(fake.unique.email(), fake.name()) for _ in range(count)]
     with cur.copy("COPY customers (email, name) FROM STDIN") as copy:
@@ -166,19 +160,19 @@ def main() -> None:
             print("Inserting data...")
             seed_customers(cur, fake, COUNTS["customers"])
             conn.commit()
-            print("    ✓ customers committed")
+            print("    customers committed")
 
             seed_products(cur, fake, COUNTS["products"])
             conn.commit()
-            print("    ✓ products committed")
+            print("    products committed")
 
             seed_orders(cur, COUNTS["orders"])
             conn.commit()
-            print("    ✓ orders committed")
+            print("    orders committed")
 
             seed_order_items(cur, COUNTS["order_items"])
             conn.commit()
-            print("    ✓ order_items committed")
+            print("    order_items committed")
 
             print_row_counts(cur)
 

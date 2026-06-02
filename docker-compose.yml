@@ -1,9 +1,3 @@
-# Optional: local PostgreSQL (project uses Neon by default)
-# Local PostgreSQL for backup/recovery practice
-# Start:  docker compose up -d
-# Stop:   docker compose down
-# Reset:  docker compose down -v   (deletes all data!)
-
 services:
   postgres:
     image: postgres:16

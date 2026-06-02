@@ -10,7 +10,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL || vars.DATABASE_URL }}
       EXPECTED_CUSTOMERS: "10000"
       EXPECTED_PRODUCTS: "1000"
       EXPECTED_ORDERS: "50000"
@@ -18,8 +18,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install PostgreSQL client
-        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - name: Install PostgreSQL client (v17)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17
+          pg_dump --version
+
+      - name: Validate required connection settings
+        run: |
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "DATABASE_URL is not set. Configure repository secret DATABASE_URL (preferred) or repository variable DATABASE_URL."
+            exit 1
+          fi
 
       - name: Run backup
         run: |
