@@ -98,8 +98,8 @@ cp .env.example .env
 
 Add a repository secret:
 
-| Name | Value |
-|------|--------|
+| Name           | Value                                                  |
+| -------------- | ------------------------------------------------------ |
 | `DATABASE_URL` | PostgreSQL connection string (direct host recommended) |
 
 Workflows:
@@ -111,10 +111,10 @@ Trigger manually from the Actions tab before relying on the schedule.
 
 ## Implementation phases
 
-| Phase | Guide | Topics |
-|-------|--------|--------|
-| 1 | [guides/PHASE_1_SETUP.md](guides/PHASE_1_SETUP.md) | Schema, backup, restore, WAL/PITR concepts |
-| 2 | [guides/PHASE_2_AUTOMATION.md](guides/PHASE_2_AUTOMATION.md) | Retention, validation, CI, health checks |
+| Phase | Guide                                                        | Topics                                     |
+| ----- | ------------------------------------------------------------ | ------------------------------------------ |
+| 1     | [guides/PHASE_1_SETUP.md](guides/PHASE_1_SETUP.md)           | Schema, backup, restore, WAL/PITR concepts |
+| 2     | [guides/PHASE_2_AUTOMATION.md](guides/PHASE_2_AUTOMATION.md) | Retention, validation, CI, health checks   |
 
 ## Sample schema
 
@@ -122,11 +122,11 @@ Four related tables: `customers` (10k), `products` (1k), `orders` (50k), `order_
 
 ## Recovery objectives
 
-| Scenario | Approach | Notes |
-|----------|----------|--------|
-| Full database loss | Restore latest `.dump` | See [docs/recovery_quick_steps.md](docs/recovery_quick_steps.md) |
-| Bad DELETE between backups | Earlier dump or provider PITR | `pg_dump` alone cannot rewind minutes |
-| Backup verification | `pg_restore --list`, row counts | Automated weekly in CI |
+| Scenario                   | Approach                        | Notes                                                            |
+| -------------------------- | ------------------------------- | ---------------------------------------------------------------- |
+| Full database loss         | Restore latest `.dump`          | See [docs/recovery_quick_steps.md](docs/recovery_quick_steps.md) |
+| Bad DELETE between backups | Earlier dump or provider PITR   | `pg_dump` alone cannot rewind minutes                            |
+| Backup verification        | `pg_restore --list`, row counts | Automated weekly in CI                                           |
 
 Target RPO/RTO depend on backup frequency and restore testing; document your measured values after restore drills.
 
@@ -148,12 +148,12 @@ Fails if the latest backup is older than 25 hours or smaller than 100 KB.
 
 ## Documentation
 
-| Resource | Link |
-|----------|------|
-| DR runbook | [docs/dr_runbook.md](docs/dr_runbook.md) |
-| RTO / RPO | [docs/rto_rpo_policy.md](docs/rto_rpo_policy.md) |
-| GitHub Pages | [makhosetive7.github.io/postgres-backup-recovery-system](https://makhosetive7.github.io/postgres-backup-recovery-system/) |
-| Implementation guides | [guides/](guides/) |
+| Resource              | Link                                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| DR runbook            | [docs/dr_runbook.md](docs/dr_runbook.md)                                                                                  |
+| RTO / RPO             | [docs/rto_rpo_policy.md](docs/rto_rpo_policy.md)                                                                          |
+| GitHub Pages          | [makhosetive7.github.io/postgres-backup-recovery-system](https://makhosetive7.github.io/postgres-backup-recovery-system/) |
+| Implementation guides | [guides/](guides/)                                                                                                        |
 
 ## License
 

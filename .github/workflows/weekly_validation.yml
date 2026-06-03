@@ -9,6 +9,8 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    container:
+      image: postgres:17
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL || vars.DATABASE_URL }}
       EXPECTED_CUSTOMERS: "10000"
@@ -18,11 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install PostgreSQL client (v17)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y postgresql-client-17
-          pg_dump --version
+      - name: Verify PostgreSQL client version
+        run: pg_dump --version
 
       - name: Validate required connection settings
         run: |

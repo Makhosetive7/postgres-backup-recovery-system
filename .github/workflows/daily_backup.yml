@@ -9,16 +9,16 @@ on:
 jobs:
   backup:
     runs-on: ubuntu-latest
+    # postgres:17 ships pg_dump/psql 17 (matches Neon); apt postgresql-client-17 is not on default Ubuntu repos
+    container:
+      image: postgres:17
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL || vars.DATABASE_URL }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install PostgreSQL client (v17)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y postgresql-client-17
-          pg_dump --version
+      - name: Verify PostgreSQL client version
+        run: pg_dump --version
 
       - name: Validate required connection settings
         run: |
